@@ -1,11 +1,17 @@
 # GitHub 上で topics-hud.ehpk を作る（PC不要）。
-# 使い方: Actions タブ → 「Build EHPK」→ Run workflow → 完了後、Artifacts の topics-hud-ehpk をダウンロード
+# 使い方: Actions タブ → 「Build EHPK」→ Run workflow
+# できあがりは2か所に置かれる:
+#   1) Artifacts の topics-hud-ehpk（zip）
+#   2) ブランチ ehpk の topics-hud.ehpk（zipなしでそのままダウンロード可）
 name: Build EHPK
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
+
+permissions:
+  contents: write
 
 jobs:
   pack:
@@ -32,3 +38,15 @@ jobs:
           name: topics-hud-ehpk
           path: topics-hud.ehpk
           if-no-files-found: error
+
+      - name: Publish .ehpk to the ehpk branch
+        run: |
+          out="$(mktemp -d)"
+          cp topics-hud.ehpk "$out/"
+          cd "$out"
+          git init -q -b ehpk
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add topics-hud.ehpk
+          git commit -q -m "Build topics-hud.ehpk from ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" ehpk
