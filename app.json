@@ -1,0 +1,13 @@
+{
+  "package_id": "com.kobe.topicshud",
+  "name": "Topics HUD",
+  "version": "0.2.0",
+  "edition": "202601",
+  "min_sdk_version": "0.0.14",
+  "entrypoint": "index.html",
+  "permissions": [],
+  "supported_languages": [
+    "ja",
+    "en"
+  ]
+}

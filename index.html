@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>Topics HUD</title>
+  </head>
+  <body>
+    <main class="app">
+      <header class="head">
+        <h1>話題メモ<small id="ver" class="ver"></small></h1>
+        <span id="status" class="pill" data-state="connecting" role="status">接続確認中…</span>
+      </header>
+
+      <section class="card" aria-labelledby="mode-h">
+        <h2 id="mode-h">表示モード</h2>
+        <label class="switch" for="page-mode">
+          <input id="page-mode" type="checkbox" role="switch" />
+          <span class="switch-track" aria-hidden="true"></span>
+          <span class="switch-text">
+            <strong>2ページモード</strong>
+            <small>グラスのテンプルをスライドすると ページ1 ⇄ ページ2 に切り替わります</small>
+          </span>
+        </label>
+      </section>
+
+      <section class="card" aria-labelledby="edit-h">
+        <div class="row">
+          <h2 id="edit-h">表示内容を編集</h2>
+          <span id="counter" class="counter">0 / 1000</span>
+        </div>
+        <label class="sr-only" for="editor">グラスに表示するテキスト（ページ1）</label>
+        <textarea id="editor" rows="6" spellcheck="false" autocomplete="off"></textarea>
+        <p id="warn" class="warn" hidden></p>
+
+        <div class="chips" data-target="editor" aria-label="記号を挿入">
+          <button type="button" data-ins="▶">▶</button>
+          <button type="button" data-ins="○">○</button>
+          <button type="button" data-ins="●">●</button>
+          <button type="button" data-ins="・">・</button>
+          <button type="button" data-ins="、">、</button>
+          <button type="button" data-ins="/">/</button>
+          <button type="button" data-ins="&#10;">改行</button>
+        </div>
+      </section>
+
+      <section id="card2" class="card" aria-labelledby="edit2-h" hidden>
+        <div class="row">
+          <h2 id="edit2-h">ページ2を編集</h2>
+          <span id="counter2" class="counter">0 / 1000</span>
+        </div>
+        <label class="sr-only" for="editor2">グラスに表示するテキスト（ページ2）</label>
+        <textarea id="editor2" rows="6" spellcheck="false" autocomplete="off"></textarea>
+        <p id="warn2" class="warn" hidden></p>
+
+        <div class="chips" data-target="editor2" aria-label="記号を挿入（ページ2）">
+          <button type="button" data-ins="▶">▶</button>
+          <button type="button" data-ins="○">○</button>
+          <button type="button" data-ins="●">●</button>
+          <button type="button" data-ins="・">・</button>
+          <button type="button" data-ins="、">、</button>
+          <button type="button" data-ins="/">/</button>
+          <button type="button" data-ins="&#10;">改行</button>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="prev-h">
+        <div class="row">
+          <h2 id="prev-h">プレビュー</h2>
+          <span id="preview-tag" class="tag">グラスの表示イメージ</span>
+        </div>
+        <div id="preview-box" class="glass">
+          <pre id="preview"></pre>
+        </div>
+      </section>
+
+      <section class="actions">
+        <button id="connect" class="primary" type="button" hidden>グラスに表示する</button>
+        <button id="flip" type="button" hidden>ページを切り替える</button>
+        <button id="toggle" class="primary" type="button" aria-pressed="false">非表示にする</button>
+      </section>
+
+      <section class="card help" aria-labelledby="help-h">
+        <h2 id="help-h">グラスでの操作</h2>
+        <dl>
+          <div><dt>スライド（スワイプ）</dt><dd>ページ1 ⇄ ページ2（2ページモード時）</dd></div>
+          <div><dt>長押し</dt><dd>表示 / 非表示を切り替え</dd></div>
+          <div><dt>メニュー「隠す/出す」</dt><dd>長押しの代わり</dd></div>
+          <div><dt>ダブルタップ</dt><dd>アプリを終了（確認あり）</dd></div>
+        </dl>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

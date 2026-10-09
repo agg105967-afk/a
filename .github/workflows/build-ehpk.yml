@@ -1,0 +1,34 @@
+# GitHub 上で topics-hud.ehpk を作る（PC不要）。
+# 使い方: Actions タブ → 「Build EHPK」→ Run workflow → 完了後、Artifacts の topics-hud-ehpk をダウンロード
+name: Build EHPK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install Even Hub CLI
+        run: npm install -g @evenrealities/evenhub-cli
+
+      # 型チェック → ビルド → evenhub pack（package.json の pack スクリプト）
+      - name: Build and pack
+        run: npm run pack
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: topics-hud-ehpk
+          path: topics-hud.ehpk
+          if-no-files-found: error
